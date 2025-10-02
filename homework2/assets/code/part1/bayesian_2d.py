@@ -108,8 +108,14 @@ def calculate_posteriors_2d(x1,x2,classes,query, debug):
         
         denominator+= numerator
         
+    results = []
+        
     for class_index in range(len(unique)):   
         print("Class",unique[class_index])
         if debug: print("numerator:", numerators[class_index])
         if debug: print("denominator:",numerators[0],"+",numerators[1])
-        print("RESULT:",numerators[class_index]/denominator)
+        res = numerators[class_index]/denominator
+        results.append(res)
+        print("RESULT:",res)
+        
+    return results
