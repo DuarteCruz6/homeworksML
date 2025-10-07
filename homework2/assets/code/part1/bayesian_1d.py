@@ -1,54 +1,75 @@
 import numpy as np
+import math
 
 def get_class_prob(classes, class_value):
     return np.mean(classes == class_value)
 
+def calculate_average(classes, x1, x2, class_value):
+    return np.mean(x1[(classes == class_value)]), np.mean(x2[(classes == class_value)])
 
-def get_query_class(classes, class_value, x1, x2, query):
-    total_class = np.sum((classes == class_value))
+def calculate_standard_deviation(classes, x1, x2, avg_x1, avg_x2, class_value):
+    dev_x1 = dev_x2 = 0
     
-    if total_class == 0:
-        return 0.0, 0.0
+    x1_class = x1[(classes == class_value)]
+    x2_class = x2[(classes == class_value)]
     
-    query_0_class = np.sum(x1[(classes == class_value)] == query[0])
-    query_1_class = np.sum(x2[(classes == class_value)] == query[1])
+    size = len(x1_class)
     
-    return query_0_class / total_class, query_1_class / total_class
+    for index in range(size):
+        dev_x1 += (x1_class[index] - avg_x1)**2
+        dev_x2 += (x2_class[index] - avg_x2)**2
+        
+    return dev_x1/size, dev_x2/size
 
-
-def get_prob_query(x1, x2, query):
-    prob_query_0 = np.mean(x1 == query[0])
-    prob_query_1 = np.mean(x2 == query[1])
+def calculate_density(query, avg, dev):
     
-    return prob_query_0, prob_query_1
-          
+    """
+    
+                    1                           (query[i] - avg) ^ 2
+        ---------------------     * e ^  -  -----------------
+        ( 2 * pi * dev^2 ) ^1/2                     2 * dev^2
+    
+    
+    
+    """
+    dens = []
+    
+    size = len(query)
+
+    for index in range(size):
+        exp = (query[index] - avg[index])**2
+        exp = exp / (2*dev[index]**2)
+        numerator = math.exp(-exp)
+        
+        denominator = 2 * math.pi * dev[index]**2
+        denominator = math.sqrt(denominator)
+    
+        density = numerator / denominator
+        dens.append(density)
+        
+    return dens
                     
 def calculate_posteriors_1d(x1,x2,classes,query,debug):
-    """
-                    P(C=A) * P(X1=query_vector[0] | C=A) * P(X2=query_vector[1] | C=A)
-    posterior_A = -------------------------------------------------------------------------
-                            P(X1=query_vector[0]) * P(X2=query_vector[1])
-    
-    """
-    
+
     unique = np.unique(classes)
-    
-    prob_query_0,  prob_query_1 = get_prob_query(x1,x2,query)
     
     for class_index in range(len(unique)):
         
         class_value = unique[class_index]
-        
         print("Class",class_value)
         
-        prob_class = get_class_prob(classes, class_value)
-        prob_x1, prob_x2 = get_query_class(classes, class_value, x1, x2, query)
+        prob_class = get_class_prob(classes,class_value)
+        if debug: print("prob_class",prob_class)
         
-        numerator = prob_class * prob_x1 * prob_x2
+        avg_x1, avg_x2 = calculate_average(classes, x1, x2, class_value)
+        if debug: print("avg_x1",avg_x1,"avg_x2",avg_x2)
         
-        denominator = prob_query_0*prob_query_1
+        dev_x1, dev_x2 = calculate_standard_deviation(classes, x1, x2, avg_x1, avg_x2, class_value)
+        if debug: print("dev_x1",dev_x1,"dev_x2",dev_x2)
         
-        if debug: print("numerator:",prob_class,"*",prob_x1,"*",prob_x2)
-        if debug: print("denominator:",prob_query_0,"*",prob_query_1)
+        dens_x1, dens_x2 = calculate_density(query, [avg_x1,avg_x2], [dev_x1,dev_x2])
+        if debug: print("dens_x1",dens_x1,"dens_x2",dens_x2)
         
-        print("RESULT:",numerator/denominator) 
+        score = prob_class * dens_x1 * dens_x2
+        
+        print("SCORE:",score)
