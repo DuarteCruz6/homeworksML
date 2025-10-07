@@ -19,7 +19,7 @@ def calculate_standard_deviation(classes, x1, x2, avg_x1, avg_x2, class_value):
         dev_x1 += (x1_class[index] - avg_x1)**2
         dev_x2 += (x2_class[index] - avg_x2)**2
         
-    return dev_x1/size, dev_x2/size
+    return math.sqrt(dev_x1/size), math.sqrt(dev_x2/size)
 
 def calculate_density(query, avg, dev):
     
