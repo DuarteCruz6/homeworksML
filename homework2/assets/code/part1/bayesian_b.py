@@ -29,25 +29,25 @@ def calculate_covariance(classes, x1, x2, class_value, avg_x1, avg_x2):
         value1 += x1_value * x2_value
         value2 += x2_value**2
         
-    matrix.append([value0/size, value1/size])
-    matrix.append([value1/size, value2/size])
+    matrix.append([value0/(size - 1), value1/(size - 1)])
+    matrix.append([value1/(size - 1), value2/(size - 1)])
     
     return np.array(matrix)
 
-
 def invert_matrix(determ, covariance_matrix):
-    
-    ### [value0 value1]
-    ### [value1 value2]
-    
-    determ = 1/determ 
+    inv_determ = 1 / determ
     a = covariance_matrix[0][0]
-    covariance_matrix[0][0] = covariance_matrix[1][1] * determ
-    covariance_matrix[1][1] = a * determ
-    covariance_matrix[0][1] *= -determ
-    covariance_matrix[1][0] = covariance_matrix[0][1]
+    b = covariance_matrix[0][1]
+    c = covariance_matrix[1][1]
     
-    return covariance_matrix
+    inv = np.zeros((2,2))
+    inv[0][0] =  c * inv_determ
+    inv[1][1] =  a * inv_determ
+    inv[0][1] = -b * inv_determ
+    inv[1][0] = -b * inv_determ
+    
+    return inv
+
     
     
 def matrix_multiply(covariance_matrix, query, avg_x1, avg_x2):
@@ -57,29 +57,25 @@ def matrix_multiply(covariance_matrix, query, avg_x1, avg_x2):
     
     c = covariance_matrix[0][0]
     d = covariance_matrix[0][1]
-    e = covariance_matrix[1][0]
-    f = covariance_matrix[1][1]
+    e = covariance_matrix[1][1]
     
-    mul = c * (a**2)
-    mul += a * b * e
-    mul += a * b * d
-    mul += f * (b**2)
-    
-    return mul
-    
-    
-def calculate_density(covariance_matrix, query, avg_x1, avg_x2):
+    mul = c*a*a + 2*d*a*b + e*b*b
 
+    return mul
+
+
+def calculate_density(covariance_matrix, query, avg_x1, avg_x2):
+    
     determ = (covariance_matrix[0][0]*covariance_matrix[1][1] - covariance_matrix[0][1]**2)
     
-    covariance_matrix = invert_matrix(determ, covariance_matrix)
+    inv_cov = invert_matrix(determ, covariance_matrix.copy())
 
-    exp = -0.5 * matrix_multiply(covariance_matrix, query, avg_x1, avg_x2)
-
-    numerator = math.exp(exp)
-    denominator = 2 * math.pi * (determ ** 0.5)
+    exp_term = -0.5 * matrix_multiply(inv_cov, query, avg_x1, avg_x2)
     
-    return numerator/denominator
+    numerator = math.exp(exp_term)
+    denominator = 2 * math.pi * math.sqrt(determ)
+    
+    return numerator / denominator
     
         
 def calculate_posteriors_2d(x1,x2,classes,query, debug):      

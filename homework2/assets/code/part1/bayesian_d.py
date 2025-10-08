@@ -1,5 +1,5 @@
 import numpy as np
-import bayesian_2d as b2
+import bayesian_b as b2
 
 
 def get_class_prob(classes, class_value):
@@ -8,30 +8,19 @@ def get_class_prob(classes, class_value):
 def get_prob_class_query(classes, x, query_value, class_value):  
     return np.sum((x == query_value) & (classes == class_value)) / np.sum((classes == class_value))
 
-def get_densities(x1,x2,classes,query,unique):     
-    denominator = 0 
-    numerators = []
+def get_densities(x1, x2, classes, query, unique):     
+    densities = []
     
-    for class_index in range(len(unique)):
-        class_value = unique[class_index]
-        
+    for class_value in unique:
         avg_x1, avg_x2 = b2.calculate_average(classes, x1, x2, class_value)
         
         covariance_matrix = b2.calculate_covariance(classes, x1, x2, class_value, avg_x1, avg_x2)
         
-        density = b2.calculate_density(covariance_matrix, query, avg_x1, avg_x2) 
+        density = b2.calculate_density(covariance_matrix, query, avg_x1, avg_x2)
         
-        numerator = get_class_prob(classes,class_value) * density
-        numerators.append(numerator)
+        densities.append(density)
         
-        denominator+= numerator
-        
-    results = []
-    for class_index in range(len(unique)):   
-        res = numerators[class_index]/denominator
-        results.append(res)
-        
-    return results
+    return densities
     
 
 def calculate_most_probable(classes, x1, x2, x3, query, debug): 
