@@ -57,7 +57,6 @@ def calculate_mu(xs, posterior_list, debug):
         denominator+= posterior_list[i]
     
     mu = numerator/denominator
-    if debug: print("new mu:", mu)
     return mu
 
 def calculate_covariance_matrix(xs, posterior_list, mu, debug):
