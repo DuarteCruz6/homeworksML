@@ -27,20 +27,20 @@ def calculate_silhouette(xs, clusters, debug):
         total_points = len(cluster["points"])
         
         for point in cluster["points"]:
-            numerator = calculate_distance(point, cluster)
-            if debug: print("numerator",numerator)
+            a = calculate_distance(point, cluster)
+            if debug: print("a",a)
             
             other_clusters = []
             for c in clusters:
                 if c is not cluster:
                     other_clusters.append(c)
             
-            denominator = 0
+            b = 0
             for c in other_clusters:
-                denominator += calculate_distance(point, c)
-            if debug: print("denominator",denominator)
+                b += calculate_distance(point, c)
+            if debug: print("b",b)
             
-            point_silhouette = 1 - (numerator/denominator)
+            point_silhouette = (b-a)/max(a,b)
             if debug: print("point_silhouette",point_silhouette)
             
             total_silhouette+=point_silhouette
