@@ -1,8 +1,8 @@
-# NOTA FINAL - xxx
+# NOTA FINAL - 40/40
 ## PROJ 1 - 10/10
 
 ## PROJ 2 - 10/10
 
 ## PROJ 3 - 10/10
 
-### PROJ 4 - xxx
+### PROJ 4 - 10/10
