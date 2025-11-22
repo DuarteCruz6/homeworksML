@@ -1,0 +1,8 @@
+Report:
+- Single PDF file up to 8 pages answering all exercises
+- Encouraged to write in Latex and use NeurIPS template https://www.overleaf.com/latex/templates/neurips-2024/tpsbbrdqcmsh
+- Make sure to de-anonymize the doc
+
+Code:
+- Repo containing all notebooks as well as a README containing the installation instructions and team info
+- Add meaningful comments to the Code
