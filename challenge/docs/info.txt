@@ -1,1 +1,16 @@
+Report:
+- Single PDF file up to 8 pages answering all exercises
+- Encouraged to write in Latex and use NeurIPS template https://www.overleaf.com/latex/templates/neurips-2024/tpsbbrdqcmsh
+- Make sure to de-anonymize the doc
+
+Code:
+- Repo containing all notebooks as well as a README containing the installation instructions and team info
+- Add meaningful comments to the Code
+
+Dataset:
+- Source: https://github.com/ro-afonso/fake-news-pt-eu
+- Size: 60,000+ news articles separated into train / validation / test sets (.csv)
+- Task: Binary classification (0 for fake news, 1 for real)
+- Features: “Text” (string) and “Label” (integer).
+
 https://tt.tecnico.ulisboa.pt/parcerias-empresariais/aproximacao-ao-talento/premios-de-merito-alunos/premio-de-merito-everis-em-aprendizagem/
