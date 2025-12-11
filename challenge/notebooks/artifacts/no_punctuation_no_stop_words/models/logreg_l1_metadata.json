@@ -1,9 +1,0 @@
-{
-    "best_cv_score": 0.8973147315152264,
-    "best_params": {
-        "C": 1,
-        "penalty": "l1",
-        "solver": "saga"
-    },
-    "timestamp": "2025-12-11 01:57:32"
-}

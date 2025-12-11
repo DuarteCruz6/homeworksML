@@ -1,9 +1,0 @@
-{
-    "best_cv_score": 0.9007754713308707,
-    "best_params": {
-        "C": 10,
-        "penalty": "l2",
-        "solver": "liblinear"
-    },
-    "timestamp": "2025-12-11 11:21:11"
-}
