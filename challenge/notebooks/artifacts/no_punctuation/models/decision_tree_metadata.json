@@ -1,0 +1,8 @@
+{
+    "best_cv_score": 0.8294985935669054,
+    "best_params": {
+        "max_depth": 50,
+        "min_samples_split": 2
+    },
+    "timestamp": "2025-12-10 18:04:08"
+}
