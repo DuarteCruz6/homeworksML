@@ -1,5 +1,4 @@
-# Portuguese Fake News Detection — Report Outline (Markdown)
-
+# Portuguese Fake News Detection — Report Outline
 ## 1. Introduction
 - Brief overview of misinformation and fake news in Portugal
 - Importance of automated fake news detection
@@ -11,7 +10,9 @@
 - Source and size of the dataset
 - Train/validation/test splits
 - Data fields: `Text`, `Label`
-- Basic exploratory statistics
+- Basic exploratory statistics:
+    - **Class distribution**: Bar chart of Fake vs Real labels
+    - **Text length distribution**: Boxplot or histogram of word/character counts
 - Preprocessing pipeline:
   - **Four types of cleaning were applied:**
     1. **No punctuation**: removed all punctuation, converted words to lowercase, removed extra whitespaces.
@@ -22,14 +23,17 @@
 
 ## 3. Feature Extraction
 - TF-IDF configuration:
-  - max_features = 5000
-  - min_df = 10
-  - max_df = 0.9
-  - idf smoothing
+  - `max_features = 5000`
+  - `min_df = 10`
+  - `max_df = 0.9`
+  - IDF smoothing enabled
 - TF-IDF applied directly to cleaned text
 - Explanation of why TF-IDF is appropriate for textual classification
+- Visualizations:
+    - **Word clouds**: most frequent terms per class (Fake/Real)
+    - **TF-IDF heatmap**: sample of terms vs documents
 
-## 4. Model Training & Evaluation (10 points)
+## 4. Model Training & Evaluation
 ### 4.1 Models Implemented
 - Decision Tree
 - Gaussian Naive Bayes
@@ -49,10 +53,14 @@
 - F1-score
 - ROC curve + AUC for best classifier
 - **Experiment 1 (Ex1)**: Run all models with all 4 cleaned datasets
-  - Comparison table summarizing all models and all datasets
-- **For subsequent experiments (Ex2 and Ex3)**: continue only with the best-performing dataset; show comparison table of the datasets and also heatmap
+  - Comparison table summarizing all models and all datasets: Table placeholder
+  - Heatmap of metrics across models and datasets: Heatmap placeholder
+  - Average metrics per dataset → Grouped bar chart placeholder
+- **Experiments 2 & 3 (Ex2 & Ex3)**: continue only with the best-performing dataset -> check assets folder
+  - Comparison table of datasets
+  - Bar charts for average metrics per dataset
 
-## 5. Model Interpretation (7 points)
+## 5. Model Interpretation
 ### 5.1 Logistic Regression Weights
 - Extracting top 10 features for fake news
 - Extracting top 10 features for real news
@@ -74,7 +82,7 @@
 - Comparison between MLP and Logistic Regression explanations
 - Discussion of differences
 
-## 6. Clustering (3 points)
+## 6. Clustering
 ### 6.1 K-Means (K=5)
 - Description and reasoning for K=5
 - Clustering on TF-IDF vectors
@@ -82,6 +90,7 @@
 ### 6.2 Cluster Inspection
 - Top 3 documents closest to each centroid
 - Semantic labels assigned to each cluster (examples: politics, health, etc.)
+- Documents per cluster: Bar chart placeholder
 
 ### 6.3 PCA Visualizations
 - 2D PCA plot colored by cluster
