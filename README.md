@@ -6,3 +6,6 @@
 ## PROJ 3 - 10/10
 
 ## PROJ 4 - 10/10
+
+## CHALLENGE 
+Check the submited repository at: https://github.com/DuarteCruz6/MLChallenge-2526
