@@ -1,5 +1,5 @@
 {
-    "best_cv_score": 0.917668956341771,
+    "best_cv_score": 0.9196889251324624,
     "best_params": {
         "alpha": 0.01,
         "hidden_layer_sizes": [
@@ -8,5 +8,5 @@
         ],
         "learning_rate_init": 0.001
     },
-    "timestamp": "2025-12-12 10:40:34"
+    "timestamp": "2025-12-17 21:29:19"
 }
